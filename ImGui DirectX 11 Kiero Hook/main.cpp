@@ -165,11 +165,11 @@ void renderloop()
 	if (!LocalPlayerObject)
 		return;
 
-	printf("LocalPlayerObject: 0x%llX\n", LocalPlayerObject);
+	//printf("LocalPlayerObject: 0x%llX\n", LocalPlayerObject);
 
 	auto LocalPlayer = LocalPlayerObject->GetComponent("PlayerMovement"); // Get The Local Player
 
-	printf("LocalPlayer: 0x%llX\n", LocalPlayer);
+	//printf("LocalPlayer: 0x%llX\n", LocalPlayer);
 
 	//if (!LocalPlayer)
 	//	return;
