@@ -31,3 +31,5 @@
 *.out
 *.app
 /.vs
+/ImGui DirectX 11 Kiero Hook/x64
+/x64

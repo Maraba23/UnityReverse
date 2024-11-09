@@ -285,10 +285,13 @@ void renderloop()
 					{
 						auto HasDeathNote = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("HasDeathNote");
 						auto KiraFollower = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("CanStealName");
-						auto L = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("CanUseNominate");
+						auto L = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("CanSeeFakeNote");
 						std::string RoleName = "Unknown";
 						auto color = ImColor(255, 255, 255);
-						
+						printf("HasDeathNote: %d\n", HasDeathNote);
+						printf("KiraFollower: %d\n", KiraFollower);
+						printf("L: %d\n", L);
+						printf("================================\n");
 						if (HasDeathNote)
 						{
 							RoleName = "Kira";
@@ -301,7 +304,7 @@ void renderloop()
 						}
 						else if (L)
 						{
-							RoleName = "L";
+							RoleName = "L. Lawliet";
 							color = ImColor(0, 0, 255);
 						}
 						else
