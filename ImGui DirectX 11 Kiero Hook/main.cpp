@@ -100,7 +100,6 @@ void Player_Cache()
 		if (!vars::initil2cpp)
 			continue;
 		void* m_pThisThread = IL2CPP::Thread::Attach(IL2CPP::Domain::Get());
-		LocalPlayer = NULL;
 		PlayerList.clear();
 		auto list = Unity::Object::FindObjectsOfType<Unity::CComponent>("UnityEngine.CharacterController");
 		for (int i = 0; i < list->m_uMaxLength; i++)
@@ -166,19 +165,21 @@ void renderloop()
 	if (!LocalPlayerObject)
 		return;
 
+	printf("LocalPlayerObject: 0x%llX\n", LocalPlayerObject);
+
 	auto LocalPlayer = LocalPlayerObject->GetComponent("PlayerMovement"); // Get The Local Player
 
-	//printf("LocalPlayer: 0x%llX\n", LocalPlayer);
+	printf("LocalPlayer: 0x%llX\n", LocalPlayer);
 
-	if (!LocalPlayer)
-		return;
+	//if (!LocalPlayer)
+	//	return;
 
-	auto HasDeathNote = LocalPlayer->GetPropertyValue<bool>("HasDeathNote");
+	//auto HasDeathNote = LocalPlayer->GetPropertyValue<bool>("HasDeathNote");
 
-	if (vars::Debug)
-	{
-		LocalPlayer->SetPropertyValue("HasDeathNote", 1);
-	}
+	//if (vars::Debug)
+	//{
+	//	LocalPlayer->SetPropertyValue("HasDeathNote", 1);
+	//}
 	
 
 	//printf("HasDeathNote: %d\n", HasDeathNote);
@@ -207,7 +208,7 @@ void renderloop()
 			if (!PlayerList[i]) // Verify that the player is valid
 				continue;
 
-			if (PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("IsDead")) continue;
+			//if (PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("IsDead")) continue;
 
 			vars::currentplayeridx = i; // Set the current player index in our sdk
 
@@ -288,10 +289,10 @@ void renderloop()
 						auto L = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("CanSeeFakeNote");
 						std::string RoleName = "Unknown";
 						auto color = ImColor(255, 255, 255);
-						printf("HasDeathNote: %d\n", HasDeathNote);
-						printf("KiraFollower: %d\n", KiraFollower);
-						printf("L: %d\n", L);
-						printf("================================\n");
+						//printf("HasDeathNote: %d\n", HasDeathNote);
+						//printf("KiraFollower: %d\n", KiraFollower);
+						//printf("L: %d\n", L);
+						//printf("================================\n");
 						if (HasDeathNote)
 						{
 							RoleName = "Kira";
