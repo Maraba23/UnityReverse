@@ -162,6 +162,27 @@ void renderloop()
 	if (!vars::initil2cpp)
 		return;
 
+	auto LocalPlayerObject = Unity::GameObject::Find("MyCharacter"); // Find the Local Player Object
+	if (!LocalPlayerObject)
+		return;
+
+	auto LocalPlayer = LocalPlayerObject->GetComponent("PlayerMovement"); // Get The Local Player
+
+	//printf("LocalPlayer: 0x%llX\n", LocalPlayer);
+
+	if (!LocalPlayer)
+		return;
+
+	auto HasDeathNote = LocalPlayer->GetPropertyValue<bool>("HasDeathNote");
+
+	if (vars::Debug)
+	{
+		LocalPlayer->SetPropertyValue("HasDeathNote", 1);
+	}
+	
+
+	//printf("HasDeathNote: %d\n", HasDeathNote);
+
 	if (vars::crosshair)
 	{
 		ImColor coltouse = vars::CrossColor;
@@ -185,6 +206,8 @@ void renderloop()
 		{
 			if (!PlayerList[i]) // Verify that the player is valid
 				continue;
+
+			if (PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("IsDead")) continue;
 
 			vars::currentplayeridx = i; // Set the current player index in our sdk
 
@@ -224,6 +247,76 @@ void renderloop()
 							if (vars::SnaplineRainbow)
 								coltouse = ImColor(vars::Rainbow.x, vars::Rainbow.y, vars::Rainbow.z);
 							ImGui::GetBackgroundDrawList()->AddRect(ImVec2(x, y), ImVec2(x + w, y + h), coltouse);
+						}
+					}
+					if (vars::ShowKira)
+					{
+						// Adiciona um texto em cima do player se ele tiver o deathnote
+						auto HasDeathNote = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("HasDeathNote");
+						if (HasDeathNote)
+						{
+							Unity::Vector3 head_pos = playerPosition;
+							head_pos.y += 1.5f;
+							Vector2 head;
+							if (Functions::worldtoscreen(head_pos, head))
+							{
+								render::DrawOutlinedText(gameFont, ImVec2(head.x, head.y - 20), 13.0f, ImColor(255, 255, 255), true, "Kira");
+							}
+						}
+
+						// Também adiciona um texto na parte de cima da tela com o nome do player
+						//auto playerName = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<std::string>("CharacterName");
+						//render::DrawOutlinedText(gameFont, ImVec2(vars::screen_center.x, 5), 13.0f, ImColor(255, 255, 255), true, "Kira is [ %s ]", playerName.c_str());
+
+					}
+					if (vars::PlayerName)
+					{
+						// Adiciona um texto em cima do player com o nome dele (CharacterName)
+						auto playerName = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<std::string>("CharacterName");
+						Unity::Vector3 head_pos = playerPosition;
+						head_pos.y += 1.5f;
+						Vector2 head;
+						if (Functions::worldtoscreen(head_pos, head))
+						{
+							render::DrawOutlinedText(gameFont, ImVec2(head.x, head.y - 20), 13.0f, ImColor(255, 255, 255), true, playerName.c_str());
+						}
+					}
+					if (vars::ShowAllRoles)
+					{
+						auto HasDeathNote = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("HasDeathNote");
+						auto KiraFollower = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("CanStealName");
+						auto L = PlayerList[vars::currentplayeridx]->GetComponent("PlayerMovement")->GetPropertyValue<bool>("CanUseNominate");
+						std::string RoleName = "Unknown";
+						auto color = ImColor(255, 255, 255);
+						
+						if (HasDeathNote)
+						{
+							RoleName = "Kira";
+							color = ImColor(255, 0, 0);
+						}
+						else if (KiraFollower)
+						{
+							RoleName = "Misa";
+							color = ImColor(255, 0, 0);
+						}
+						else if (L)
+						{
+							RoleName = "L";
+							color = ImColor(0, 0, 255);
+						}
+						else
+						{
+							RoleName = "Investigator";
+							color = ImColor(0, 255, 0);
+						}
+
+
+						Unity::Vector3 head_pos = playerPosition;
+						head_pos.y += 1.5f;
+						Vector2 head;
+						if (Functions::worldtoscreen(head_pos, head))
+						{
+							render::DrawOutlinedText(gameFont, ImVec2(head.x, head.y - 20), 13.0f, color, true, RoleName.c_str());
 						}
 					}
 				}

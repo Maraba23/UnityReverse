@@ -19,6 +19,7 @@ namespace mem
 	}
 }
 
+
 namespace sdk
 {
 	uintptr_t Base;
@@ -89,8 +90,17 @@ namespace vars
 	bool PlayerSnaplines = false;
 	bool SnaplineRainbow = false;
 	bool PlayerBoxESP = false;
+	bool PlayerName = false;
+
+	bool ShowKira = false;
+
+	bool ShowAllRoles = false;
 
 	bool NPCEsp = false;
+
+	bool Debug = false;
+
+
 
 	bool aimbot = false;
 	bool fov_check = false;

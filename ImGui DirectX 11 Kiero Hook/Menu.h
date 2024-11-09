@@ -282,7 +282,9 @@ void DrawMenu()
 			ImGui::ColorEdit3("##PlayerBoxColor", (float*)&vars::boxESPCol, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
 			
 			ImGui::Checkbox("NPC ESP", &vars::NPCEsp);
-
+			ImGui::Spacing();
+			ImGui::Checkbox("Show Kira", &vars::ShowKira);
+			ImGui::Checkbox("Show All Roles", &vars::ShowAllRoles);
 			//ImGui::Checkbox("Crosshair", &vars::crosshair);
 			//ImGui::SameLine();
 			//ImGui::ColorEdit3("##CrosshairColor", (float*)&vars::CrossColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
@@ -328,6 +330,8 @@ void DrawMenu()
 			//ImGui::Combo("Aim Bone", &vars::boneselected, vars::bones, IM_ARRAYSIZE(vars::bones));
 			break;
 		case 2:
+			ImGui::Checkbox("Debug", &vars::Debug);
+
 /*			ImGui::Checkbox("##RecoilMulti", &vars::recoileditor);
 			if (ImGui::IsItemHovered())
 				ImGui::SetTooltip("Enable");

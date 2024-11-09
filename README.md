@@ -12,6 +12,8 @@ For now I was only able to make some basic stuff:
 - [x] Player Snaplines
 - [x] Local Player Checker
 - [x] NPC ESP
+- [x] Show Kira
+- [x] Show All Roles
 
 I tend to add more features in the future, if you like this repository, please give it a star.
 
